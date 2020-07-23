@@ -22,11 +22,11 @@ export function request(state: Array<types.city>, action: favortisCityActions) {
 }
 
 export function receive(state: Array<types.city>, action: favortisCityActions) {
-	let updatedState3 = state.slice();
+	let updatedState = state.slice();
 	if ('city' in action.payload) {
-		updatedState3[action.payload.id].weatherInfo.weather = action.payload.city;
-		updatedState3[action.payload.id].isFetching = false;
-		return updatedState3;
+		updatedState[action.payload.id].weatherInfo.weather = action.payload.city;
+		updatedState[action.payload.id].isFetching = false;
+		return updatedState;
 	}
 	return state;
 }
