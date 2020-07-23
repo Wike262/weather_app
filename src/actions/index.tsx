@@ -16,7 +16,7 @@ export const requestCityWeather = (cityName: string) => ({
 	},
 });
 
-export const receiveCityWeather = (cityName: string, json: types.cityInfo) => ({
+export const receiveCityWeather = (cityName: string, json: types.cityInfo | types.error) => ({
 	type: consts.RECEIVE_WEATHER,
 	payload: {
 		cityName: cityName,
@@ -68,7 +68,7 @@ export const requestFavoritsCityWeather = (cityName: string, id: number) => ({
 	},
 });
 
-export const receiveCityFavoritsWeather = (cityName: string, id: number, json: types.cityInfo) => ({
+export const receiveCityFavoritsWeather = (cityName: string, id: number, json: types.cityInfo | types.error) => ({
 	type: consts.RECEIVE_WEATHER_FAVORITS,
 	payload: {
 		id,

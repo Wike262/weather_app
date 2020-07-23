@@ -12,6 +12,11 @@ export interface cityInfo {
 	};
 }
 
+export interface error {
+	cod: string;
+	message: string;
+}
+
 export interface city {
 	isFetching: boolean;
 	cityName: string;
