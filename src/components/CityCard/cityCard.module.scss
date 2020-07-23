@@ -1,0 +1,43 @@
+.City {
+	&__Weather {
+		&__Wrapper {
+			display: flex;
+		}
+		&__Button_close {
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			background: transparent;
+			outline: none;
+			font-size: 26px;
+			border: none;
+			cursor: pointer;
+		}
+		&_Rain {
+			background: blue;
+		}
+		&_Snow {
+			background: cornsilk;
+		}
+		&_Clear {
+			background: yellow;
+		}
+		&_Clouds {
+			background: gray;
+		}
+		&__Button_Favorit {
+			background: blue;
+			font-size: 26px;
+			border: none;
+			border-radius: 5px;
+			padding: 15px;
+			color: #ffffff;
+		}
+		&__Temp {
+			svg {
+				font-size: 40px;
+				margin: -10px -15px;
+			}
+		}
+	}
+}

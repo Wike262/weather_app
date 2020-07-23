@@ -1,0 +1,32 @@
+.City {
+	&__Weather {
+		display: flex;
+		align-items: center;
+		width: 500px;
+		justify-content: space-between;
+		border-radius: 15px;
+		margin: 15px 0;
+		padding: 5px 10px;
+		&_Rain {
+			background: blue;
+		}
+		&_Snow {
+			background: cornsilk;
+		}
+		&_Clear {
+			background: yellow;
+		}
+		&_Clouds {
+			background: gray;
+		}
+		&__Name {
+		}
+		&__Temp {
+			font-size: 26px;
+			svg {
+				font-size: 40px;
+				margin: -10px -15px;
+			}
+		}
+	}
+}
