@@ -12,8 +12,8 @@ const mapStateToProps = (state: StoreState, ownProps: { FavoriteCities: Array<st
 };
 
 const mapDispathToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-	setCity: (cityName: string, city: City) => {
-		dispatch(setCurrentCity(cityName, city));
+	setCity: (cityName: string, id: number, city: City) => {
+		dispatch(setCurrentCity(cityName, id, city));
 	},
 	getCity: (cityName: string, id: number) => {
 		dispatch(fetchCityIfNeeded(cityName, id));

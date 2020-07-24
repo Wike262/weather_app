@@ -30,7 +30,7 @@ export interface City {
 	isFavorit: boolean;
 	id: number;
 	cityName: string;
-	weatherInfo: WeatherInfo;
+	weatherInfo: WeatherInfo | null;
 }
 
 export interface RequestWeather {
@@ -41,12 +41,27 @@ export interface RequestWeather {
 	};
 }
 
+export interface RequesNewCityWeather {
+	type: consts.REQUEST_NEWCITY_WEATHER;
+	payload: {
+		cityName: string;
+	};
+}
+
 export interface ReceiveWeather {
 	type: consts.RECEIVE_WEATHER;
 	payload: {
 		cityName: string;
-		weatherInfo: WeatherInfo;
+		weatherInfo: WeatherInfo | Error;
 		id: number;
+	};
+}
+
+export interface ReceiveNewCityWeather {
+	type: consts.RECEIVE_NEWCITY_WEATHER;
+	payload: {
+		cityName: string;
+		weatherInfo: WeatherInfo | null;
 	};
 }
 
@@ -61,7 +76,7 @@ export interface SetCurrentCity {
 	type: consts.SET_CURRENT_CITY;
 	payload: {
 		cityName: string;
-		city: WeatherInfo;
+		city: City;
 		id: number;
 	};
 }

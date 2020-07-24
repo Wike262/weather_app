@@ -14,6 +14,17 @@ interface Props {
 	removeCurrentCity: Function;
 }
 
+function Loading() {
+	return (
+		<>
+			{' '}
+			<ModalWindow>
+				<h1>Loading</h1>
+			</ModalWindow>
+		</>
+	);
+}
+
 const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 	if (!!state) {
 		const addToStorage = (name: string) => {
@@ -26,11 +37,7 @@ const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 			}
 		};
 		if (state.isFetching) {
-			return (
-				<ModalWindow>
-					<h1>Loading</h1>
-				</ModalWindow>
-			);
+			return <Loading />;
 		} else if (state?.weatherInfo?.cod !== 200) {
 			return (
 				<ModalWindow>
@@ -42,7 +49,7 @@ const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 					</>
 				</ModalWindow>
 			);
-		} else if (state.weatherInfo.id) {
+		} else
 			return (
 				<ModalWindow>
 					<>
@@ -65,13 +72,12 @@ const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 						<button onClick={() => removeCurrentCity(state.id)} className={style.City__Weather__Button_close}>
 							<FaTimes />
 						</button>
-						<button onClick={() => addToStorage(state.weatherInfo.name)} className={style.City__Weather__Button_Favorit}>
+						<button onClick={() => addToStorage(state.weatherInfo!.name)} className={style.City__Weather__Button_Favorit}>
 							AddToFavorit
 						</button>
 					</>
 				</ModalWindow>
 			);
-		} else return <></>;
 	} else return <></>;
 };
 

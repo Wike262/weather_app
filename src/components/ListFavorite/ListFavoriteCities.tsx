@@ -35,7 +35,7 @@ const ListFavoritisCitys = ({ state, setCity, getCity, setFavoriteCities, Favori
 					return (
 						<div
 							key={item.weatherInfo.name}
-							onClick={() => setCity(item.weatherInfo.name, item.weatherInfo)}
+							onClick={() => setCity(item.weatherInfo!.name, item.id, item.weatherInfo)}
 							className={[style.City__Weather, style[`City__Weather_${item.weatherInfo.weather[0].main}`]].join(' ')}
 						>
 							<h1 className={style.City__Weather__Name}>{item.weatherInfo.name}</h1>

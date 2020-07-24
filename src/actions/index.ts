@@ -7,9 +7,11 @@ export type CityActions =
 	| types.ReceiveWeather
 	| types.SetCurrentCity
 	| types.RemoveCurrentCity
-	| types.SetFavoriteCities;
+	| types.SetFavoriteCities
+	| types.RequesNewCityWeather
+	| types.ReceiveNewCityWeather;
 
-export const requestWeather = (cityName: string, id: number) => ({
+export const requestWeather = (cityName: string, id: number): types.RequestWeather => ({
 	type: consts.REQUEST_WEATHER,
 	payload: {
 		cityName,
@@ -17,7 +19,18 @@ export const requestWeather = (cityName: string, id: number) => ({
 	},
 });
 
-export const receiveWeather = (cityName: string, id: number, json: types.WeatherInfo | types.Error) => ({
+export const requesNewCitytWeather = (cityName: string): types.RequesNewCityWeather => ({
+	type: consts.REQUEST_NEWCITY_WEATHER,
+	payload: {
+		cityName,
+	},
+});
+
+export const receiveWeather = (
+	cityName: string,
+	id: number,
+	json: types.WeatherInfo | types.Error
+): types.ReceiveWeather => ({
 	type: consts.RECEIVE_WEATHER,
 	payload: {
 		cityName: cityName,
@@ -26,28 +39,59 @@ export const receiveWeather = (cityName: string, id: number, json: types.Weather
 	},
 });
 
+export const receiveNewCityWeather = (
+	cityName: string,
+	id: number,
+	json: types.WeatherInfo
+): types.ReceiveNewCityWeather => ({
+	type: consts.RECEIVE_NEWCITY_WEATHER,
+	payload: {
+		cityName: cityName,
+		weatherInfo: json,
+	},
+});
+
+export const setCurrentCity = (cityName: string, id: number, city: types.City): types.SetCurrentCity => ({
+	type: consts.SET_CURRENT_CITY,
+	payload: {
+		cityName,
+		id,
+		city,
+	},
+});
+
+export const setFavoriteCities = (cities: Array<string>): types.SetFavoriteCities => ({
+	type: consts.SET_FAVORITE_CITIES,
+	payload: {
+		cities,
+	},
+});
+
+export const removeCurrentCity = (id: number): types.RemoveCurrentCity => ({
+	type: consts.REMOVE_CURRENT_CITY,
+	payload: { id },
+});
+
 const fetchCity = (cityName: string, id?: number) => (dispatch: ThunkDispatch<{}, {}, any>) => {
-	dispatch(requestWeather(cityName, id!));
+	id !== undefined ? dispatch(requestWeather(cityName, id)) : dispatch(requesNewCitytWeather(cityName));
 	return fetch(
 		`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&lang=en&appid=${process.env.REACT_APP_API_KEY}`
 	)
 		.then((response) => response.json())
-		.then((json) => dispatch(receiveWeather(cityName, id!, json)))
+		.then((json) =>
+			id !== undefined
+				? dispatch(receiveWeather(cityName, id!, json))
+				: dispatch(receiveNewCityWeather(cityName, id!, json))
+		)
 		.catch((error) => dispatch(receiveWeather(cityName, id!, error)));
 };
 
 const shouldFetch = (state: types.StoreState, id?: number) => {
-	if (id !== undefined) {
-		let cities = state.cities[id];
-		if (!cities?.isFetching) {
-			return true;
-		} else return false;
-	} else {
-		let cities = state.cities[state.cities.length];
-		if (!cities?.isFetching) {
-			return true;
-		} else return false;
-	}
+	let Id = id !== undefined ? id : state.cities.length - 1;
+	let cities = state.cities[Id];
+	if (!cities?.isFetching) {
+		return true;
+	} else return false;
 };
 
 export const fetchCityIfNeeded = (cityName: string, id?: number) => (
@@ -58,23 +102,3 @@ export const fetchCityIfNeeded = (cityName: string, id?: number) => (
 		return dispatch(fetchCity(cityName, id));
 	}
 };
-
-export const setCurrentCity = (cityName: string, city: types.City) => ({
-	type: consts.SET_CURRENT_CITY,
-	payload: {
-		cityName,
-		city,
-	},
-});
-
-export const setFavoriteCities = (cities: Array<string>) => ({
-	type: consts.SET_FAVORITE_CITIES,
-	payload: {
-		cities,
-	},
-});
-
-export const removeCurrentCity = (id: number) => ({
-	type: consts.REMOVE_CURRENT_CITY,
-	payload: { id },
-});
