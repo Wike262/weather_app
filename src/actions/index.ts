@@ -39,11 +39,7 @@ export const receiveWeather = (
 	},
 });
 
-export const receiveNewCityWeather = (
-	cityName: string,
-	id: number,
-	json: types.WeatherInfo
-): types.ReceiveNewCityWeather => ({
+export const receiveNewCityWeather = (cityName: string, json: types.WeatherInfo): types.ReceiveNewCityWeather => ({
 	type: consts.RECEIVE_NEWCITY_WEATHER,
 	payload: {
 		cityName: cityName,
@@ -79,9 +75,7 @@ const fetchCity = (cityName: string, id?: number) => (dispatch: ThunkDispatch<{}
 	)
 		.then((response) => response.json())
 		.then((json) =>
-			id !== undefined
-				? dispatch(receiveWeather(cityName, id!, json))
-				: dispatch(receiveNewCityWeather(cityName, id!, json))
+			id !== undefined ? dispatch(receiveWeather(cityName, id!, json)) : dispatch(receiveNewCityWeather(cityName, json))
 		)
 		.catch((error) => dispatch(receiveWeather(cityName, id!, error)));
 };

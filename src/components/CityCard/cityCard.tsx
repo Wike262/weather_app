@@ -17,7 +17,6 @@ interface Props {
 function Loading() {
 	return (
 		<>
-			{' '}
 			<ModalWindow>
 				<h1>Loading</h1>
 			</ModalWindow>
@@ -38,46 +37,49 @@ const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 		};
 		if (state.isFetching) {
 			return <Loading />;
-		} else if (state?.weatherInfo?.cod !== 200) {
-			return (
-				<ModalWindow>
-					<>
-						<h1>Not found! Sorry)</h1>{' '}
-						<button onClick={() => removeCurrentCity(state.id)} className={style.City__Weather__Button_close}>
-							<FaTimes />
-						</button>
-					</>
-				</ModalWindow>
-			);
-		} else
-			return (
-				<ModalWindow>
-					<>
-						<div className={style.City__Weather}>
-							<h1 className={style.City__Weather__Name}>{state.weatherInfo.name}</h1>
-							<div className={style.City__Weather__Wrapper}>
-								<h3 className={style.City__Weather__Description}>{state.weatherInfo.weather[0].description}</h3>
-								<img src={`http://openweathermap.org/img/wn/${state.weatherInfo.weather[0].icon}@2x.png`} alt="Weather_Icon" />
-								<p className={style.City__Weather__Temp}>
-									{state.weatherInfo.main.temp.toFixed(0)} <WiCelsius />
-								</p>
+		} else {
+			if (state?.weatherInfo?.cod !== 200) {
+				return (
+					<ModalWindow>
+						<>
+							<h1>Not found! Sorry)</h1>{' '}
+							<button onClick={() => removeCurrentCity(state.id)} className={style.City__Weather__Button_close}>
+								<FaTimes />
+							</button>
+						</>
+					</ModalWindow>
+				);
+			} else {
+				return (
+					<ModalWindow>
+						<>
+							<div className={style.City__Weather}>
+								<h1 className={style.City__Weather__Name}>{state.weatherInfo.name}</h1>
+								<div className={style.City__Weather__Wrapper}>
+									<h3 className={style.City__Weather__Description}>{state.weatherInfo.weather[0].description}</h3>
+									<img src={`http://openweathermap.org/img/wn/${state.weatherInfo.weather[0].icon}@2x.png`} alt="Weather_Icon" />
+									<p className={style.City__Weather__Temp}>
+										{state.weatherInfo.main.temp.toFixed(0)} <WiCelsius />
+									</p>
+								</div>
+								<div className={style.City__Weather__Wrapper}>
+									<p className={style.City__Weather__Wind}>
+										Wind:
+										{state.weatherInfo.wind.speed} m/s {state.weatherInfo.wind.deg} degres
+									</p>
+								</div>
 							</div>
-							<div className={style.City__Weather__Wrapper}>
-								<p className={style.City__Weather__Wind}>
-									Wind:
-									{state.weatherInfo.wind.speed} m/s {state.weatherInfo.wind.deg} degres
-								</p>
-							</div>
-						</div>
-						<button onClick={() => removeCurrentCity(state.id)} className={style.City__Weather__Button_close}>
-							<FaTimes />
-						</button>
-						<button onClick={() => addToStorage(state.weatherInfo!.name)} className={style.City__Weather__Button_Favorit}>
-							AddToFavorit
-						</button>
-					</>
-				</ModalWindow>
-			);
+							<button onClick={() => removeCurrentCity(state.id)} className={style.City__Weather__Button_close}>
+								<FaTimes />
+							</button>
+							<button onClick={() => addToStorage(state.weatherInfo!.name)} className={style.City__Weather__Button_Favorit}>
+								AddToFavorit
+							</button>
+						</>
+					</ModalWindow>
+				);
+			}
+		}
 	} else return <></>;
 };
 

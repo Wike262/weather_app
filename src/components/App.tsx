@@ -31,6 +31,7 @@ class App extends React.Component<{}, State> {
 			} as State);
 		}
 	}
+
 	public render() {
 		return (
 			<Provider store={store}>
