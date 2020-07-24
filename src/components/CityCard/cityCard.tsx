@@ -25,7 +25,6 @@ const CityCard = ({ state, removeCurrentCity, setFavoriteCities }: Props) => {
 				localStorage['FavoriteCities'] = JSON.stringify(handler);
 			}
 		};
-		console.log(state);
 		if (state.isFetching) {
 			return (
 				<ModalWindow>

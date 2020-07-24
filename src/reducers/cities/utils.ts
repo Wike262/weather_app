@@ -22,7 +22,6 @@ let nextCityId = 0;
 export function requestData(state: Array<types.City>, action: CityActions) {
 	if ('id' in action.payload && action.payload.id! !== undefined) {
 		let id = action.payload.id!;
-		console.log(id);
 		let handler = updateItemInArray(state, id, (city: types.City) => {
 			return updateObject(city, { isFetching: true });
 		});
@@ -35,7 +34,6 @@ export function receiveData(state: Array<types.City>, action: CityActions) {
 	if ('id' in action.payload) {
 		if (action.payload.id !== undefined) {
 			let id = action.payload.id!;
-			console.log(id);
 			let handler = updateItemInArray(state, id, (city: types.City) => {
 				return 'weatherInfo' in action.payload
 					? updateObject(city, { isFetching: false, weatherInfo: action.payload.weatherInfo })

@@ -18,7 +18,6 @@ const ListFavoritisCitys = ({ state, setCity, getCity, setFavoriteCities, Favori
 	return (
 		<>
 			{state.map((item: City, index: number) => {
-				console.log(!item.weatherInfo);
 				if (!item.weatherInfo) {
 					getCity(item.cityName, index);
 					return (

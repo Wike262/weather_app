@@ -27,7 +27,6 @@ export const receiveWeather = (cityName: string, id: number, json: types.Weather
 });
 
 const fetchCity = (cityName: string, id?: number) => (dispatch: ThunkDispatch<{}, {}, any>) => {
-	console.log(id);
 	dispatch(requestWeather(cityName, id!));
 	return fetch(
 		`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&lang=en&appid=${process.env.REACT_APP_API_KEY}`
