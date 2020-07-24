@@ -1,27 +1,22 @@
 import React from 'react';
-import { fetchCityIfNeeded } from '../../actions';
 import style from './SearchField.module.scss';
 
-const search = (searchCityName: string, dispatch: any) => {
-	dispatch(fetchCityIfNeeded(searchCityName));
-};
 interface Props {
-	state: any;
-	dispatch: any;
+	searchCity: Function;
 }
 
-const searchField = ({ state, dispatch }: Props) => {
+const searchField = ({ searchCity }: Props) => {
+	const search = (event: React.FormEvent) => {
+		let searchCityName = (document.getElementById('SearchInput') as HTMLInputElement).value;
+		event.preventDefault();
+		searchCity(searchCityName);
+	};
+
 	return (
-		<div>
+		<form onSubmit={search}>
 			<input type="text" id="SearchInput" className={style.Search__Input} />
-			<button
-				className={style.Search__Button}
-				onClick={(e) => search((document.getElementById('SearchInput') as HTMLInputElement).value, dispatch)}
-				type="submit"
-			>
-				Search
-			</button>
-		</div>
+			<button className={style.Search__Button}>Search</button>
+		</form>
 	);
 };
 
